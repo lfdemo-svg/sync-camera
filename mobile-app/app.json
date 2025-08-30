@@ -5,7 +5,6 @@
     "version": "1.0.0",
     "orientation": "default",
     "userInterfaceStyle": "dark",
-    
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -15,7 +14,9 @@
       "infoPlist": {
         "NSCameraUsageDescription": "This app needs access to camera to stream video for Padel court coverage.",
         "NSMicrophoneUsageDescription": "This app needs access to microphone to record audio with video streams.",
-        "UIBackgroundModes": ["audio"]
+        "UIBackgroundModes": [
+          "audio"
+        ]
       }
     },
     "android": {
@@ -44,7 +45,8 @@
           "recordAudioAndroid": true
         }
       ],
-      "expo-av"
+      "expo-av",
+      "expo-font"
     ],
     "extra": {
       "eas": {

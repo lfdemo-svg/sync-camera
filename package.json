@@ -1,0 +1,35 @@
+{
+  "name": "sync-camera",
+  "version": "1.0.0",
+  "description": "Multi-camera synchronization system for Padel court coverage",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "demo": "node dist/demo.js",
+    "demo:sync": "node dist/syncDemo.js",
+    "demo:detection": "node dist/detectionDemo.js",
+    "demo:video": "node dist/videoDemo.js",
+    "demo:complete": "node dist/completeDemo.js",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/node": "^20.0.0",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "typescript": "^5.0.0",
+    "opencv4nodejs": "^5.6.0",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.44.0",
+    "jest": "^29.6.1",
+    "ts-node-dev": "^2.0.0"
+  }
+}

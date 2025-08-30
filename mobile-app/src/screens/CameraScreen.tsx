@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import { CameraView } from 'expo-camera';
+import { CameraView, Camera } from 'expo-camera';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Device from 'expo-device';
@@ -35,7 +35,8 @@ export const CameraScreen: React.FC = () => {
     duration: '00:00:00'
   });
 
-  const cameraRef = useRef<CameraView>(null);
+  // CameraView ref (Camera component is now non-JSX API container in newer expo-camera versions)
+  const cameraRef = useRef<CameraView | null>(null);
   const socketService = useRef<SocketService | null>(null);
   const cameraService = useRef<CameraService | null>(null);
   const recordingStartTime = useRef<number | null>(null);
@@ -54,13 +55,28 @@ export const CameraScreen: React.FC = () => {
   };
 
   const requestPermissions = async () => {
-    const { status } = await CameraView.requestCameraPermissionsAsync();
-    setHasPermission(status === 'granted');
-    
-    if (status !== 'granted') {
+    try {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      // Optionally request mic permission if recording audio
+      try {
+        await Camera.requestMicrophonePermissionsAsync?.();
+      } catch {}
+
+      setHasPermission(status === 'granted');
+
+      if (status !== 'granted') {
+        Alert.alert(
+          'Camera Permission Required',
+          'This app needs camera access to function properly.',
+          [{ text: 'OK' }]
+        );
+      }
+    } catch (e) {
+      console.error('Failed to request camera permissions', e);
+      setHasPermission(false);
       Alert.alert(
-        'Camera Permission Required',
-        'This app needs camera access to function properly.',
+        'Permission Error',
+        'Could not request camera permissions. Please check app settings.',
         [{ text: 'OK' }]
       );
     }
@@ -218,7 +234,7 @@ export const CameraScreen: React.FC = () => {
   if (hasPermission === false) {
     return (
       <View style={styles.permissionContainer}>
-        <Ionicons name="camera-off" size={64} color="#666" />
+  <Ionicons name="camera" size={64} color="#666" />
         <Text style={styles.permissionText}>Camera access denied</Text>
         <Text style={styles.permissionSubtext}>
           Please enable camera permissions in your device settings

@@ -31,16 +31,29 @@ This system solves the problem of incomplete court coverage when mounting camera
 
 ### Core Components
 
-1. **CameraView**: Manages individual camera properties and coverage calculations
-2. **CalibrationService**: Handles homography matrix calculation and validation
-3. **CoverageAnalyzer**: Analyzes court coverage and generates optimization recommendations
-4. **CourtCoverageService**: Main orchestrator for the complete system
+1. **Backend (Node.js/TypeScript)**:
+   - **CameraView**: Manages individual camera properties and coverage calculations
+   - **CalibrationService**: Handles homography matrix calculation and validation  
+   - **CoverageAnalyzer**: Analyzes court coverage and generates optimization recommendations
+   - **CourtCoverageService**: Main orchestrator for the complete system
+   - **Express Server**: REST API and WebSocket server
+
+2. **Mobile App (React Native/Expo)**:
+   - **CameraScreen**: Full-screen camera interface with professional controls
+   - **SocketService**: Real-time communication with backend server
+   - **CameraService**: Video capture and streaming management
+   - **UI Components**: Connection status, recording controls, metrics display
+
+3. **Web Dashboard**: 
+   - **Real-time monitoring**: Live camera feeds and sync metrics
+   - **Session management**: Start/stop recording sessions
+   - **Calibration interface**: Court setup and camera positioning
 
 ### Technology Stack
-- **TypeScript/Node.js**: Core application logic
-- **OpenCV**: Computer vision and homography calculations
-- **Express**: REST API for camera control and calibration
-- **Socket.io**: Real-time communication for live metrics
+- **Backend**: TypeScript, Node.js, Express, Socket.io, OpenCV
+- **Mobile**: React Native, Expo, expo-camera, expo-av
+- **Frontend**: HTML5, JavaScript, Chart.js, WebSockets
+- **Communication**: REST API, WebSocket, real-time video streaming
 
 ## 🚀 Getting Started
 
@@ -52,14 +65,24 @@ TypeScript >= 5.0.0
 
 ### Installation
 ```bash
-# Install dependencies
-npm install
+# Install all dependencies (backend + mobile app)
+npm run setup:all
 
-# Build the project
-npm run build
+# Or install separately:
+npm install              # Backend dependencies
+npm run mobile:install   # Mobile app dependencies
+npm run build           # Build backend
+```
 
-# Run the demo
-npm run demo
+### Quick Start
+```bash
+# Terminal 1: Start backend server
+npm run dev
+
+# Terminal 2: Start mobile app development server  
+npm run mobile:start
+
+# Open Expo Go app on phones and scan QR code
 ```
 
 ### Basic Usage

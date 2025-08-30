@@ -1,13 +1,17 @@
+import './polyfills';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { CameraScreen } from './src/screens/CameraScreen';
-import { KeepAwake } from 'expo-keep-awake';
+import { activateKeepAwakeAsync } from 'expo-keep-awake';
+import { useEffect } from 'react';
 
 export default function App() {
-  // Keep screen awake during camera usage
-  KeepAwake.activateKeepAwake();
+  useEffect(() => {
+    // Keep screen awake during camera usage
+    activateKeepAwakeAsync();
+  }, []);
 
   return (
     <SafeAreaProvider>

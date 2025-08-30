@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import { Camera, CameraType } from 'expo-camera';
+import { CameraView } from 'expo-camera';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Device from 'expo-device';
@@ -35,7 +35,7 @@ export const CameraScreen: React.FC = () => {
     duration: '00:00:00'
   });
 
-  const cameraRef = useRef<Camera>(null);
+  const cameraRef = useRef<CameraView>(null);
   const socketService = useRef<SocketService | null>(null);
   const cameraService = useRef<CameraService | null>(null);
   const recordingStartTime = useRef<number | null>(null);
@@ -54,7 +54,7 @@ export const CameraScreen: React.FC = () => {
   };
 
   const requestPermissions = async () => {
-    const { status } = await Camera.requestCameraPermissionsAsync();
+    const { status } = await CameraView.requestCameraPermissionsAsync();
     setHasPermission(status === 'granted');
     
     if (status !== 'granted') {
@@ -230,11 +230,10 @@ export const CameraScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.cameraContainer}>
-        <Camera
+        <CameraView
           ref={cameraRef}
           style={styles.camera}
-          type={CameraType.back}
-          ratio="16:9"
+          facing="back"
         />
         
         <CameraOverlay showGrid={showGrid} />

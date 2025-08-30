@@ -4,13 +4,8 @@
     "slug": "sync-camera-mobile",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#000000"
-    },
+    
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -25,7 +20,6 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
       "package": "com.synccamera.mobile",
@@ -49,8 +43,7 @@
           "recordAudioAndroid": true
         }
       ],
-      "expo-av",
-      "expo-keep-awake"
+      "expo-av"
     ],
     "extra": {
       "eas": {

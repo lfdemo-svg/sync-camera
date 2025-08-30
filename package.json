@@ -16,11 +16,12 @@
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit",
     "mobile:install": "cd mobile-app && npm install",
-    "mobile:start": "cd mobile-app && expo start",
-    "mobile:android": "cd mobile-app && expo start --android",
-    "mobile:ios": "cd mobile-app && expo start --ios",
-    "mobile:build:android": "cd mobile-app && eas build --platform android",
-    "mobile:build:ios": "cd mobile-app && eas build --platform ios",
+    "mobile:start": "cd mobile-app && npx expo start",
+    "mobile:android": "cd mobile-app && npx expo start --android",
+    "mobile:ios": "cd mobile-app && npx expo start --ios",
+    "mobile:build:android": "cd mobile-app && npx eas build --platform android",
+    "mobile:build:ios": "cd mobile-app && npx eas build --platform ios",
+    "mobile:doctor": "cd mobile-app && npx expo-doctor",
     "setup:all": "npm install && npm run mobile:install && npm run build"
   },
   "dependencies": {

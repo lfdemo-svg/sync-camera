@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     justifyContent: 'center',
     alignItems: 'center',
-    backdropFilter: 'blur(10px)',
   },
   controlButtonActive: {
     backgroundColor: '#44ff44',
@@ -127,7 +126,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     justifyContent: 'center',
     alignItems: 'center',
-    backdropFilter: 'blur(10px)',
     borderWidth: 3,
     borderColor: 'rgba(255, 255, 255, 0.3)',
   },

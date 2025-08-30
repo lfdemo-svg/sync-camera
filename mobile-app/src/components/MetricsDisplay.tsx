@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 8,
     marginBottom: 10,
-    backdropFilter: 'blur(10px)',
   },
   durationText: {
     color: '#ff4444',
@@ -124,7 +123,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: 'center',
     minWidth: 70,
-    backdropFilter: 'blur(10px)',
   },
   metricValue: {
     color: '#44ff44',

@@ -29,7 +29,8 @@
         "INTERNET",
         "ACCESS_NETWORK_STATE",
         "WAKE_LOCK"
-      ]
+      ],
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"

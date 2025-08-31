@@ -1,0 +1,55 @@
+{
+  "name": "sync-camera-mobile",
+  "version": "1.0.0",
+  "description": "Mobile camera app for sync-camera 2-camera Padel court coverage system",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "build:android": "eas build --platform android",
+    "build:ios": "eas build --platform ios",
+    "publish": "expo publish"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^14.0.0",
+    "events": "^3.3.0",
+    "expo": "53.0.22",
+    "expo-av": "~15.1.7",
+    "expo-battery": "~9.1.4",
+    "expo-camera": "~16.1.11",
+    "expo-constants": "~17.1.7",
+    "expo-device": "~7.1.4",
+    "expo-font": "~13.3.2",
+    "expo-keep-awake": "~14.1.4",
+    "expo-media-library": "~17.1.7",
+    "expo-network": "~7.1.5",
+    "expo-screen-orientation": "~8.1.7",
+    "expo-status-bar": "~2.2.3",
+    "react": "19.0.0",
+    "react-native": "0.79.5",
+    "react-native-get-random-values": "^1.11.0",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-svg": "15.11.2",
+    "socket.io-client": "^4.7.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "~19.0.10",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "babel-preset-expo": "~13.0.0",
+    "typescript": "~5.8.3"
+  },
+  "keywords": [
+    "expo",
+    "react-native",
+    "mobile",
+    "camera",
+    "synchronization",
+    "padel",
+    "court",
+    "streaming"
+  ],
+  "private": true
+}

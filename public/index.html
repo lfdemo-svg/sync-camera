@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sync-Camera Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🎾 Sync-Camera</h1>
+                <nav class="nav">
+                    <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+                    <button class="nav-btn" data-section="cameras">Cameras</button>
+                    <button class="nav-btn" data-section="sessions">Sessions</button>
+                    <button class="nav-btn" data-section="monitoring">Monitoring</button>
+                </nav>
+                <div class="status-indicator">
+                    <span class="status-dot online"></span>
+                    <span class="status-text">Online</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="section-header">
+                    <h2>2-Camera Padel Court Coverage</h2>
+                    <p>Real-time synchronization and court coverage monitoring</p>
+                </div>
+
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>System Status</h3>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric">
+                                <span class="metric-value" id="coverage-percent">--</span>
+                                <span class="metric-label">Court Coverage</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value" id="sync-latency">--</span>
+                                <span class="metric-label">Sync Latency</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Camera Status</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="camera-item">
+                                <span class="camera-name">📹 Camera A (Back Wall)</span>
+                                <span class="camera-status" id="camera-a-status">Ready</span>
+                            </div>
+                            <div class="camera-item">
+                                <span class="camera-name">📹 Camera B (Back Wall)</span>
+                                <span class="camera-status" id="camera-b-status">Ready</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Quick Actions</h3>
+                        </div>
+                        <div class="card-content">
+                            <button class="btn btn-primary" onclick="startCalibration()">
+                                🎯 Start Calibration
+                            </button>
+                            <button class="btn btn-secondary" onclick="startSession()">
+                                ▶️ Start Recording
+                            </button>
+                            <button class="btn btn-secondary" onclick="analyzeCoverage()">
+                                📊 Analyze Coverage
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="coverage-visualization">
+                    <h3>Court Coverage Map</h3>
+                    <div class="court-diagram">
+                        <div class="court">
+                            <div class="court-zone camera-a-zone">Camera A Zone</div>
+                            <div class="net-line">Net</div>
+                            <div class="court-zone camera-b-zone">Camera B Zone</div>
+                            <div class="camera-indicator camera-a">📹 A</div>
+                            <div class="camera-indicator camera-b">📹 B</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cameras Section -->
+            <section id="cameras" class="section">
+                <div class="section-header">
+                    <h2>Camera Management</h2>
+                    <button class="btn btn-primary" onclick="addCamera()">➕ Add Camera</button>
+                </div>
+
+                <div class="camera-list">
+                    <div class="camera-card">
+                        <div class="camera-info">
+                            <h3>Camera A - Back Wall</h3>
+                            <p>Position: (5.0m, 0.0m) at 1.35m height</p>
+                            <div class="camera-stats">
+                                <span class="stat">Resolution: 1080p</span>
+                                <span class="stat">FPS: 30</span>
+                                <span class="stat">Status: <span class="status online">Active</span></span>
+                            </div>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="btn btn-small" onclick="calibrateCamera('camera_a')">🎯 Calibrate</button>
+                            <button class="btn btn-small btn-secondary" onclick="testCamera('camera_a')">🔧 Test</button>
+                        </div>
+                    </div>
+
+                    <div class="camera-card">
+                        <div class="camera-info">
+                            <h3>Camera B - Back Wall</h3>
+                            <p>Position: (5.0m, 20.0m) at 1.35m height</p>
+                            <div class="camera-stats">
+                                <span class="stat">Resolution: 1080p</span>
+                                <span class="stat">FPS: 30</span>
+                                <span class="stat">Status: <span class="status online">Active</span></span>
+                            </div>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="btn btn-small" onclick="calibrateCamera('camera_b')">🎯 Calibrate</button>
+                            <button class="btn btn-small btn-secondary" onclick="testCamera('camera_b')">🔧 Test</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sessions Section -->
+            <section id="sessions" class="section">
+                <div class="section-header">
+                    <h2>Recording Sessions</h2>
+                    <button class="btn btn-primary" onclick="createSession()">📹 New Session</button>
+                </div>
+
+                <div class="session-form" id="session-form" style="display: none;">
+                    <h3>Create New Session</h3>
+                    <div class="form-group">
+                        <label for="session-name">Session Name</label>
+                        <input type="text" id="session-name" placeholder="e.g., Padel Match 2024-01-15">
+                    </div>
+                    <div class="form-group">
+                        <label for="session-duration">Duration (minutes)</label>
+                        <input type="number" id="session-duration" value="60" min="1" max="180">
+                    </div>
+                    <div class="form-group">
+                        <label>Cameras</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" checked> Camera A</label>
+                            <label><input type="checkbox" checked> Camera B</label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="startRecording()">▶️ Start Recording</button>
+                        <button class="btn btn-secondary" onclick="cancelSession()">❌ Cancel</button>
+                    </div>
+                </div>
+
+                <div class="session-list">
+                    <h3>Recent Sessions</h3>
+                    <div class="session-item">
+                        <div class="session-info">
+                            <h4>Test Session</h4>
+                            <p>Created: Just now • Duration: 5 min • Status: Ready</p>
+                        </div>
+                        <div class="session-actions">
+                            <button class="btn btn-small">📊 View</button>
+                            <button class="btn btn-small btn-secondary">⬇️ Download</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Monitoring Section -->
+            <section id="monitoring" class="section">
+                <div class="section-header">
+                    <h2>Live Monitoring</h2>
+                    <div class="monitoring-controls">
+                        <button class="btn btn-small btn-success" id="recording-btn" onclick="toggleRecording()">
+                            ⏹️ Not Recording
+                        </button>
+                    </div>
+                </div>
+
+                <div class="monitoring-grid">
+                    <div class="monitor-card">
+                        <h3>Camera Feeds</h3>
+                        <div class="camera-feeds">
+                            <div class="feed-item">
+                                <div class="feed-placeholder">📹 Camera A Feed</div>
+                                <span class="feed-status">1080p • 30fps • 12ms latency</span>
+                            </div>
+                            <div class="feed-item">
+                                <div class="feed-placeholder">📹 Camera B Feed</div>
+                                <span class="feed-status">1080p • 30fps • 15ms latency</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="monitor-card">
+                        <h3>Synchronization Metrics</h3>
+                        <div class="metrics-grid">
+                            <div class="metric">
+                                <span class="metric-value" id="sync-accuracy">8ms</span>
+                                <span class="metric-label">Sync Accuracy</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value" id="frame-drops">0</span>
+                                <span class="metric-label">Dropped Frames</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value" id="buffer-health">85%</span>
+                                <span class="metric-label">Buffer Health</span>
+                            </div>
+                        </div>
+                        <canvas id="latencyChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

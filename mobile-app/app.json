@@ -1,0 +1,57 @@
+{
+  "expo": {
+    "name": "Sync Camera",
+    "slug": "sync-camera-mobile",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "dark",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.synccamera.mobile",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs access to camera to stream video for Padel court coverage.",
+        "NSMicrophoneUsageDescription": "This app needs access to microphone to record audio with video streams.",
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#000000"
+      },
+      "package": "com.synccamera.mobile",
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "WAKE_LOCK"
+      ],
+      "versionCode": 2
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Sync Camera to access your camera for video streaming.",
+          "microphonePermission": "Allow Sync Camera to access your microphone for audio recording.",
+          "recordAudioAndroid": true
+        }
+      ],
+      "expo-av",
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "sync-camera-padel-coverage"
+      }
+    }
+  }
+}
